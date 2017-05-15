@@ -48,11 +48,24 @@ summarize_latency_histogram <- function(data) {
 }
 
 plot_latency_histogram <- function (data) {
-  ggplot(filter(data, count>0), aes(x=microseconds, y=count, color=group)) +
-    geom_point(shape=1, alpha=0.75) +
-    scale_y_log10(labels = scales::comma, breaks = 10 ^ (1:9)) +
-    scale_x_log10(limits = c(1, 1e6), breaks = 10 ^ (1:6), labels = scales::comma) +
-    annotation_logticks(sides="bl")
+  data <- set$latency.histogram %>%
+    group_by(group) %>%
+    arrange(microseconds) %>%
+    mutate(q = 1-cumsum(count)/total)
+  ggplot(data, aes(y=microseconds, x=q, color=group)) +
+    geom_line() +
+    # The standard scales::commas labels seem to do too much rounding.
+    scale_x_log10(labels = function(breaks) paste(100*(1-breaks), "%"),
+                  limits = c(0.000001, 1),
+                  breaks = c(0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1), 
+                  minor_breaks = NULL) +
+    scale_y_log10(breaks = 10^(0:6),
+                  minor_breaks=NULL,
+                  labels = scales::comma) +
+    labs(y = "microseconds per breath",
+         x = "percentile (log scale)",
+         title = "Breath duration",
+         subtitle = "Calculated from the \"latency histogram\" log that counts all breaths (not sampled.)")
 }
 
 # ------------------------------------------------------------

@@ -43,7 +43,7 @@ breath_size(set$breaths)
 
 Latency histogram data records the duration of each breath that the engine takes. Every breath is counted into one of ~500 bins corresponding to durations from one microsecond up to one second.
 
-```{r echo=FALSE}
+```{r echo=FALSE, warning=FALSE}
 plot_latency_histogram(set$latency.histogram)
 ```
 
