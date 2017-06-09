@@ -1,6 +1,9 @@
 # Convert DWARF type information as printed by 'readelf' into YAML format.
 BEGIN { FS=": " }
 
+/^ <1>/ { indent = "";   }    # top-level definition
+/^ <2>/ { indent = "  "; }    # child definition
+
 # From:
 #   <0><b>: Abbrev Number: 1 (DW_TAG_compile_unit)
 # To:
@@ -9,8 +12,8 @@ BEGIN { FS=": " }
 /Abbrev Number.*DW_TAG/ {
     match($1, /<[0-9a-f]+><([0-9a-f]+)>/, id);
     match($NF, "DW_TAG_([a-z_]+)", tag);
-    printf("<%s>:\n", id[1]);
-    printf("  tag: %s\n", tag[1]);
+    printf("%s<%s>:\n", indent, id[1]);
+    printf("%s  tag: %s\n", indent, tag[1]);
 }
 
 # From:
@@ -20,5 +23,5 @@ BEGIN { FS=": " }
 /DW_AT_/ {
     gsub("\t", " ");            # tabs to spaces
     match($1, "DW_AT_([a-zA-Z0-9_]+)", name);
-    printf("  %s: %s\n", name[1], $NF); 
+    printf("%s  %s: %s\n", indent, name[1], $NF);
 }
