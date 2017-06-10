@@ -12,7 +12,7 @@ BEGIN { FS=": " }
 /Abbrev Number.*DW_TAG/ {
     match($1, /<[0-9a-f]+><([0-9a-f]+)>/, id);
     match($NF, "DW_TAG_([a-z_]+)", tag);
-    printf("%s<%s>:\n", indent, id[1]);
+    printf("%s<0x%s>:\n", indent, id[1]);
     printf("%s  tag: %s\n", indent, tag[1]);
 }
 
