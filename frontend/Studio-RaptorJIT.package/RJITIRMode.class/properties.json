@@ -6,12 +6,9 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"events",
-		"flashback",
-		"dwarf",
-		"traces",
-		"irModes"
+		"op1mode",
+		"op2mode"
 	],
-	"name" : "RJITAuditLog",
+	"name" : "RJITIRMode",
 	"type" : "normal"
 }
