@@ -1,7 +1,7 @@
 instance creation
 realize: deriv
 	| process outputs |
-	process := PipeableOSProcess command: 'nix-store --realize ', deriv.
+	process := PipeableOSProcess command: 'nix-store --realize ', deriv, ' 2>&1'.
 	process close.
 	outputs := process outputAndError collect: [ :m | TextConverter default convertFromSystemString: m ].
 	process succeeded ifFalse: [ NixError new messageText: (outputs at: 2); signal ].
