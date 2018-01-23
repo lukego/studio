@@ -17,9 +17,9 @@
 with pkgs; with builtins; with stdenv;
 
 rec {
-  raptorjit = llvmPackages_4.stdenv.mkDerivation {
+  raptorjit = stdenv.mkDerivation {
     name = "raptorjit-auditlog";
-    nativeBuildInputs = [ gcc luajit ];
+    nativeBuildInputs = [ luajit ];
     src = fetchFromGitHub {
       owner = "lukego";
       repo = "raptorjit";
