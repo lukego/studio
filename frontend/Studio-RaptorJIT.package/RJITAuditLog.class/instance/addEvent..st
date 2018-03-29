@@ -1,3 +1,7 @@
 initialization
 addEvent: dict
-   events add: (self makeEventFrom: dict).
+	| event |
+	event := self makeEventFrom: dict.
+	event number: events size + 1.
+	"event informUser."
+	events add: event.

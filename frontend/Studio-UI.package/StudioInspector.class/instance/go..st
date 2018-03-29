@@ -2,7 +2,7 @@ scripting opening
 go: code
 	[ :job |
 		| product |
-		job title: 'Studio backend is building the Nix expression'.
+		job title: 'Studio backend is building data to inspect'.
 		product := [ NixBuild onCode: code ] on: NixError do: [ :error |
 			| dialog |
 			dialog := NixErrorWindow openWithMessage: error messageText.
@@ -10,6 +10,6 @@ go: code
 				position: self window position + (self window extent * 0.05);
 				extent: self window extent * 0.9.
 			^ nil ].
-		job title: 'Studio frontend is loading the product build by the backend'.
+		job title: 'Studio frontend is analyzing data from the backend'.
 		^ RJITProcess new fromPath: product firstOutput.
 	] asJob run.
