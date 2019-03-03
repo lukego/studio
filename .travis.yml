@@ -13,12 +13,15 @@ before_script:
 services:
 - docker
 
+stage: "nix-build"
 script:
 - nix-env -if https://github.com/cachix/cachix/tarball/master --extra-substituters https://cachix.cachix.org --trusted-public-keys 'cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
   cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM='
 - if test -n "$authtoken"; then cachix authtoken $authtoken; fi
 - cachix use studio
 - nix-build -j2 -A studio-env . | cachix push studio
+stage: "Docker"
+script:
 - docker build -t studioproject/studio .
 - docker run -t studioproject/studio test
-- if test -n "$DOCKER_PASSWORD"; then echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin; docker push studioproject/studio; fi
+- if [[ $TRAVIS_PULL_REQUEST == "false" ]]; then echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin; docker push studioproject/$TRAVIS_BRANCH; fi
