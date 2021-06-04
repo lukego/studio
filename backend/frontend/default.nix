@@ -50,7 +50,7 @@ let
       xorg.libXi
     ];
 
-  gt-version = "v0.8.407";
+  gt-version = "v0.8.686";
 
   gt-lib = mkDerivation {
     name = "gt-lib-${gt-version}";
@@ -89,7 +89,7 @@ let
   gt-image = fetchzip {
     name = "gt-image-${gt-version}";
     url = "https://github.com/feenkcom/gtoolkit/releases/download/${gt-version}/GT.zip";
-    sha256 = "1bvaqij1x93wgk6q9hpc3zz1fvh1fss8nar0dxjc5kyiwklynfjv";
+    sha256 = "sha256:05wj64i151r68ym0ryqkdlay6z5xyrlszkxv07zvm4j35yaqa33m";
   };
 
 
@@ -182,7 +182,7 @@ let
   gtoolkit-full = fetchzip {
     name = "gtoolkit-${gt-version}";
     url = "https://dl.feenk.com/gt/GlamorousToolkitLinux64-${gt-version}.zip";
-    sha256 = "0sg2hpdigphi6cgvr17c9r30gb26vyy56v52094hnmlwijp8b3bf";
+    sha256 = "sha256:0wdg6fick8c2q0hpnswy9b4cclgqb3y699cix7gd3df1h89kggs3";
    };
 
   # Script to start the standard GToolkit image.
